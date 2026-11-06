@@ -12,5 +12,9 @@ jobs:
           distribution: temurin
           java-version: '21'
           cache: maven
-      - name: Build and run JUnit tests
+      - name: Compile instructor starter (intentional failing acceptance tests)
+        if: hashFiles('.starter-template') != ''
+        run: mvn -B -DskipTests package
+      - name: Run full JUnit suite (student team repositories)
+        if: hashFiles('.starter-template') == ''
         run: mvn -B clean verify
